@@ -1,0 +1,19 @@
+{
+  "name": "clownfish/client",
+  "description": "Image scaling with AWS S3 and Lambda",
+  "license": "MIT",
+  "require": {
+    "aws/aws-sdk-php": "^3.19"
+  },
+  "authors": [
+    {
+      "name": "Claudio Mettler",
+      "email": "github@ponyfleisch.ch"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Clownfish": "src/"
+    }
+  }
+}
