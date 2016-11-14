@@ -61,7 +61,7 @@ class Image
 
         if($mode == 'm'){
             $widthRatio = $width/$this->width;
-            $heightRatio = $width/$this->height;
+            $heightRatio = $height/$this->height;
 
             if($widthRatio < $heightRatio){
                 $newWidth = $width;
