@@ -58,15 +58,23 @@ class Service {
         $targetName = implode('-', [$contentHash, $space, $id, $width, $height]).'.'.$ext;
         $key = 'o/'.$targetName;
 
-        $result = $this->client->putObject([
-            'Bucket' => $this->bucket,
-            'Key' => $key,
-            'SourceFile' => $filename,
-            'ContentType' => $contentType,
-            'CacheControl' => 'max-age=31536000', // 1 year
-        ]);
-
-        return new Image($targetName);
+        // exponential backoff for now.
+        $retries = 5;
+        while($retries > 0) {
+            $result = $this->client->putObject([
+                'Bucket' => $this->bucket,
+                'Key' => $key,
+                'SourceFile' => $filename,
+                'ContentType' => $contentType,
+                'CacheControl' => 'max-age=31536000', // 1 year
+            ]);
+            if ($result->get('ObjectURL')) {
+                return new Image($targetName);
+            } else {
+                sleep(pow(6 - $retries, 2));
+                $retries--;
+            }
+        }
     }
 
     public function deleteImage($filename)
