@@ -8,7 +8,7 @@ class Service {
     protected $client;
     protected $bucket;
 
-    public function __construct($bucket, $region, $credentials)
+    public function __construct($bucket, $region, $credentials=null)
     {
         $config = ['region' => $region, 'version' => '2006-03-01'];
         if($credentials){
